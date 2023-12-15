@@ -19,7 +19,7 @@ quartzFonts(avenir = c("Avenir Book", "Avenir Black", "Avenir Book Oblique", "Av
 par(family = 'avenir')
 
 # identify overlapping clusters
-str(stria_score)
+#str(stria_score)
 
 stria_score$isCluster <- FALSE
 for (k in stria_score$Event_num) { # k event number, that refers to the line in full sheet
@@ -130,53 +130,74 @@ plotter <- function(start, end){
 
 
 
-drawfader <- function (y){ # input is fader number
+drawfader <- function(y, beg, end){ # input is fader number
+	  plot(y,
+       xlab = "", # axis label 
+       ylab = "",
+       xlim = c(beg, end), 
+       ylim = c(y-1,y+1), # axis size
+       xaxs = "i",
+       yaxs = "i",
+       main = "",
+       type = "n",
+       yaxt = "n",
+       xaxt = "n",
+       lty = 2,
+       fg = gray(0.7),
+       axes = FALSE
+       )
+       # Change the plot region color
+       bg_color <- ifelse(y>3, 0, "#f7f7f7")
+rect(par("usr")[1], par("usr")[3],
+     par("usr")[2], par("usr")[4],
+     col = bg_color) # Color
+       
+axis(side = 2, las = 2, mgp = c(3, 0.75, 0), at = y, tick = FALSE) ## Rotated labels for MIDICC-Num
+box(lty = 'dashed', col = 'grey')
     for (k in stria_score$Event_num) { # k event number, that refers to the line in full sheet
+
       if (!is.na(k) && stria_score$MidiFaderCC[k] == y){
         #segments(stria_score$Start[k], y+stria_score$Freq[k]*0.0001, stria_score$End[k], y+stria_score$Freq[k]*0.0001) # 
+        #segments(stria_score$Start[k], y, stria_score$End[k], y) # 
         col_r <- col_scale_fact*stria_score$Freq[k]
-        f(stria_score$ampF[k],stria_score$IAF[k] ,stria_score$Start[k], stria_score$End[k], stria_score$Amp[k]*Amp_scale_fact, y+1+(12*log2(stria_score$Freq[k]/440)+69)*0.005, col_r)
+        f(stria_score$ampF[k],stria_score$IAF[k] ,stria_score$Start[k], stria_score$End[k], stria_score$Amp[k]*Amp_scale_fact, y+(12*log2(stria_score$Freq[k]/440)+69)*0.005, col_r)
        if(!stria_score$isCluster[k]) { # event is in cluster, omit event number
 	        text(stria_score$Start[k]-number_distance,
-	             y+1+(12*log2(stria_score$Freq[k]/440)+69)*0.005,
+	             y+(12*log2(stria_score$Freq[k]/440)+69)*0.005,
 	             labels = k, cex = 1.5)
 	             } else { # mark events in cluster
 	             	#segments(stria_score$Start[k], y+1+stria_score$Freq[k]*0.0001, stria_score$End[k], y+1+stria_score$Freq[k]*0.0001, col = "red") #
-	             	segments(stria_score$Start[k-1], y+1.2, stria_score$End[k-1], y+1.2, col = "red") # previous is first element in cluster to mark
-	             	segments(stria_score$Start[k], y+1.2, stria_score$End[k], y+1.2, col = "red") # cluster elements (get double drawn)
+	             	segments(stria_score$Start[k-1], y, stria_score$End[k-1], y, col = "red") # previous is first element in cluster to mark
+	             	segments(stria_score$Start[k], y, stria_score$End[k], y, col = "red") # cluster elements (get double drawn)
 	             }
 	        text(stria_score$Start[k] + stria_score$Dur[k]*0.5,
-	             y+1+(12*log2(stria_score$Freq[k]/440)+69)*0.005,
+	             y+(12*log2(stria_score$Freq[k]/440)+69)*0.005,
 	             labels = paste(round(stria_score$Dur[k], 0), "s"), cex = 1.5, col = "white")
       }
     }
 }
 
 
+
 drawpage <- function (nr,beg, end)
 {
-  par(mfcol=c(1,1), mai = c(0.7, 1, 0, 0.4), omi = c(0.2, 0, 0.5, 0), cex = 0.5) # papiergröße
-  plotter(beg, end)
-  mtext("Stria by John Chowning Performancescore",                     # Add Titel manually
-        side = 3,
-        line = 2,
-        cex = 0.5
-        )
-  mtext(nr,                     # Add Pagenumber manually
-        side = 3,
-        line = 2,
-        cex = 0.5,
-        adj=1
-        )
-  for (fader_CC in 0:7){
-  	drawfader(fader_CC)
+  par(mfcol=c(8,1), mai = c(0, 1, 0, 0.4), omi = c(0.2, 0, 0.5, 0), cex = 0.5) # page setup
+  #plot(c(1:100))
+  #plotter(beg, end)
+  for (fader_CC in 7:0){
+  	drawfader(fader_CC, beg, end)
     }
+   mtext("Stria by John Chowning Performancescore", side = 3, line = 58, cex = 0.5)  # Add Titel
+   mtext(nr, side = 3, line = 58, cex = 0.5, adj=1)  # Add Pagenumber
+   mtext("        Player 1", line = -15, cex = 0.75, outer = TRUE, adj = 0)
+   mtext("        Player 2", line = -50, cex = 0.75, outer = TRUE, adj = 0)
+	
+rect(100, 400, 125, 450, col = "green", border = "blue") # coloured
 
 }
 
 # while debugging Export goes to Desktop
-pdf("~/Desktop/Stria_ahnew_v1.pdf", width = 10.0, height = 7,
-    onefile = TRUE, encoding = "TeXtext.enc")
+pdf("~/Desktop/Stria_ahnew_v1.pdf", width = 10.0, height = 7, onefile = TRUE, encoding = "TeXtext.enc")
 
 
 drawpage(1, 0, 95)
