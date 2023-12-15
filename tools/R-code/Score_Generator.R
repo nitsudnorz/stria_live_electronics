@@ -1,11 +1,11 @@
 # TODO:
-# - correct Axis Labels to CC numbers
-# - events 4-7 are one slot to low
-# - make more beautiful cluster markers
-# - idea to make a new 'plot' element for each midiCC, so that the row has the right label/number, instead of 1234 + 1234
+#Generate Csound MidiTester Score
+
 
 
 # set your working directory to the location of this File
+# this is the most common problem, so check if this scipt does not run properly
+
 # "your_harddrive_location/stria_live_electronics/tools/R-code"
 
 path <- "../../data/score_as_csv/Stria_score_asNumbers_FaderCC.csv"
@@ -19,8 +19,6 @@ quartzFonts(avenir = c("Avenir Book", "Avenir Black", "Avenir Book Oblique", "Av
 par(family = 'avenir')
 
 # identify overlapping clusters
-#str(stria_score)
-
 stria_score$isCluster <- FALSE
 for (k in stria_score$Event_num) { # k event number, that refers to the line in full sheet
 	if (k > 1 && stria_score$MidiFaderCC[k] == stria_score$MidiFaderCC[k-1])
@@ -30,6 +28,7 @@ for (k in stria_score$Event_num) { # k event number, that refers to the line in 
 		stria_score$isCluster[k] = TRUE
 	}
 }
+
 
 #export lists for PD
 for (fader_CC in 0:7){
@@ -86,50 +85,6 @@ f <- function (l, r , x, y, a, o, c)# left right start, end, amplitude, offset=f
 }
 
 
-#x="Fader Pl 1"
-plotter <- function(start, end){
-  plot(x = 1,  
-       xlab = "", # axis label 
-       ylab = "",
-       xlim = c(start, end), 
-       ylim = c(0, 10), # axis size
-       xaxs = "i",
-       yaxs = "i",
-       main = "",
-       type = "n",
-       yaxt = "n",
-       xaxt = "n")
-  
-  axis(2, at = c( 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5), las = 2, 
-  #labels = c("", "1", "", "2", "", "3", "", "4", "", "", "1", "", "2", "", "3", "", "4"), 
-  tick = FALSE)
-  
-  fader_lines <- c(1, 2, 3, 4, 6, 7, 8, 9)
-  abline(h = fader_lines, col = "grey", lty = "dashed")
-  abline(h = 5, col = "black") # score devider players
-  mtext("Player 2",                     # Add title manually
-        side = 2,
-        line = 2,
-        las = 2,
-        at = 3,
-        cex = 0.8,
-        font = 3)
-  mtext("Player 1",                     # Add title manually
-        side = 2,
-        line = 2,
-        las = 2,
-        at = 8,
-        cex = 0.8,
-        font = 3)
-  
-  #steps = c(0:95)*10
-  #for (l in steps){
-  #  abline(v = steps, col = "grey", lty = "dashed")
-  #	}
-}
-
-
-
 drawfader <- function(y, beg, end){ # input is fader number
 	  plot(y,
        xlab = "", # axis label 
@@ -155,18 +110,18 @@ rect(par("usr")[1], par("usr")[3],
 axis(side = 2, las = 2, mgp = c(3, 0.75, 0), at = y, tick = FALSE) ## Rotated labels for MIDICC-Num
 box(lty = 'dashed', col = 'grey')
     for (k in stria_score$Event_num) { # k event number, that refers to the line in full sheet
-
       if (!is.na(k) && stria_score$MidiFaderCC[k] == y){
-        #segments(stria_score$Start[k], y+stria_score$Freq[k]*0.0001, stria_score$End[k], y+stria_score$Freq[k]*0.0001) # 
-        #segments(stria_score$Start[k], y, stria_score$End[k], y) # 
+        #segments(stria_score$Start[k], y, stria_score$End[k], y) # simple lines, for testing
         col_r <- col_scale_fact*stria_score$Freq[k]
-        f(stria_score$ampF[k],stria_score$IAF[k] ,stria_score$Start[k], stria_score$End[k], stria_score$Amp[k]*Amp_scale_fact, y+(12*log2(stria_score$Freq[k]/440)+69)*0.005, col_r)
+        f(stria_score$ampF[k],stria_score$IAF[k], stria_score$Start[k], 
+        	stria_score$End[k], stria_score$Amp[k]*Amp_scale_fact, 
+        	y+(12*log2(stria_score$Freq[k]/440)+69)*0.005, 
+        	col_r)
        if(!stria_score$isCluster[k]) { # event is in cluster, omit event number
 	        text(stria_score$Start[k]-number_distance,
 	             y+(12*log2(stria_score$Freq[k]/440)+69)*0.005,
 	             labels = k, cex = 1.5)
 	             } else { # mark events in cluster
-	             	#segments(stria_score$Start[k], y+1+stria_score$Freq[k]*0.0001, stria_score$End[k], y+1+stria_score$Freq[k]*0.0001, col = "red") #
 	             	segments(stria_score$Start[k-1], y, stria_score$End[k-1], y, col = "grey") # previous is first element in cluster to mark
 	             	segments(stria_score$Start[k], y, stria_score$End[k], y, col = "grey") # cluster elements (get double drawn)
 	             }
@@ -178,7 +133,6 @@ box(lty = 'dashed', col = 'grey')
 }
 
 
-
 drawpage <- function (nr,beg, end)
 {
   par(mfcol=c(8,1), mai = c(0, 1, 0, 0.4), omi = c(0.2, 0, 0.5, 0), cex = 0.5) # page setup
@@ -187,7 +141,7 @@ drawpage <- function (nr,beg, end)
   for (fader_CC in 7:0){
   	drawfader(fader_CC, beg, end)
     }
-   mtext("Stria by John Chowning Performancescore", side = 3, line = 58, cex = 0.5)  # Add Titel
+   mtext("'Stria' by John Chowning: A Performancescore", side = 3, line = 58, cex = 0.5)  # Add Titel
    mtext(nr, side = 3, line = 58, cex = 0.5, adj=1)  # Add Pagenumber
    mtext("        Player 1", line = -15, cex = 0.75, outer = TRUE, adj = 0)
    mtext("        Player 2", line = -50, cex = 0.75, outer = TRUE, adj = 0)
@@ -211,5 +165,13 @@ drawpage(8, 665, 760)
 drawpage(9, 760, 855)
 drawpage(10, 855, 950)
 
-
 dev.off()
+
+
+
+
+#######
+#Generate Csound MidiTester Score
+
+
+
