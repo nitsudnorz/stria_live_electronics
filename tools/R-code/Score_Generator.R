@@ -167,8 +167,8 @@ box(lty = 'dashed', col = 'grey')
 	             labels = k, cex = 1.5)
 	             } else { # mark events in cluster
 	             	#segments(stria_score$Start[k], y+1+stria_score$Freq[k]*0.0001, stria_score$End[k], y+1+stria_score$Freq[k]*0.0001, col = "red") #
-	             	segments(stria_score$Start[k-1], y, stria_score$End[k-1], y, col = "red") # previous is first element in cluster to mark
-	             	segments(stria_score$Start[k], y, stria_score$End[k], y, col = "red") # cluster elements (get double drawn)
+	             	segments(stria_score$Start[k-1], y, stria_score$End[k-1], y, col = "grey") # previous is first element in cluster to mark
+	             	segments(stria_score$Start[k], y, stria_score$End[k], y, col = "grey") # cluster elements (get double drawn)
 	             }
 	        text(stria_score$Start[k] + stria_score$Dur[k]*0.5,
 	             y+(12*log2(stria_score$Freq[k]/440)+69)*0.005,
