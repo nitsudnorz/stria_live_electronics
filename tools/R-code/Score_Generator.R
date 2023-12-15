@@ -88,7 +88,7 @@ f <- function (l, r , x, y, a, o, c)# left right start, end, amplitude, offset=f
 #x="Fader Pl 1"
 plotter <- function(start, end){
   plot(x = 1,  
-       xlab = "", # axis lable 
+       xlab = "", # axis label 
        ylab = "",
        xlim = c(start, end), 
        ylim = c(0, 10), # axis size
@@ -104,14 +104,14 @@ plotter <- function(start, end){
   fader_lines <- c(1, 2, 3, 4, 6, 7, 8, 9)
   abline(h = fader_lines, col = "grey", lty = "dashed")
   abline(h = 5, col = "black")
-  mtext("Fbank1",                     # Add title manually
+  mtext("Player 1",                     # Add title manually
         side = 2,
         line = 2,
         las = 2,
         at = 3,
         cex = 0.8,
         font = 3)
-  mtext("Fbank2",                     # Add title manually
+  mtext("Player 2",                     # Add title manually
         side = 2,
         line = 2,
         las = 2,
@@ -138,7 +138,9 @@ drawfader <- function (y){ # input is fader number
 	             y+1+(12*log2(stria_score$Freq[k]/440)+69)*0.005,
 	             labels = k, cex = 1.5)
 	             } else { # mark events in cluster
-	             	segments(stria_score$Start[k], y+1+stria_score$Freq[k]*0.0001, stria_score$End[k], y+1+stria_score$Freq[k]*0.0001, col = "red") #
+	             	#segments(stria_score$Start[k], y+1+stria_score$Freq[k]*0.0001, stria_score$End[k], y+1+stria_score$Freq[k]*0.0001, col = "red") #
+	             	segments(stria_score$Start[k-1], y+1.2, stria_score$End[k-1], y+1.2, col = "red") # previous is first element in cluster to mark
+	             	segments(stria_score$Start[k], y+1.2, stria_score$End[k], y+1.2, col = "red") # cluster elements (get double drawn)
 	             }
 	        text(stria_score$Start[k] + stria_score$Dur[k]*0.5,
 	             y+1+(12*log2(stria_score$Freq[k]/440)+69)*0.005,
