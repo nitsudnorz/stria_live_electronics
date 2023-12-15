@@ -2,6 +2,7 @@
 # - correct Axis Labels to CC numbers
 # - events 4-7 are one slot to low
 # - make more beautiful cluster markers
+# - idea to make a new 'plot' element for each midiCC, so that the row has the right label/number, instead of 1234 + 1234
 
 
 # set your working directory to the location of this File
@@ -99,19 +100,21 @@ plotter <- function(start, end){
        yaxt = "n",
        xaxt = "n")
   
-  axis(2, at = c( 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5), las = 2, labels = c("", "1", "", "2", "", "3", "", "4", "", "", "1", "", "2", "", "3", "", "4"), tick = FALSE)
+  axis(2, at = c( 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5), las = 2, 
+  #labels = c("", "1", "", "2", "", "3", "", "4", "", "", "1", "", "2", "", "3", "", "4"), 
+  tick = FALSE)
   
   fader_lines <- c(1, 2, 3, 4, 6, 7, 8, 9)
   abline(h = fader_lines, col = "grey", lty = "dashed")
-  abline(h = 5, col = "black")
-  mtext("Player 1",                     # Add title manually
+  abline(h = 5, col = "black") # score devider players
+  mtext("Player 2",                     # Add title manually
         side = 2,
         line = 2,
         las = 2,
         at = 3,
         cex = 0.8,
         font = 3)
-  mtext("Player 2",                     # Add title manually
+  mtext("Player 1",                     # Add title manually
         side = 2,
         line = 2,
         las = 2,
@@ -152,7 +155,7 @@ drawfader <- function (y){ # input is fader number
 
 drawpage <- function (nr,beg, end)
 {
-    par(mfcol=c(1,1), mai = c(0.7, 1, 0, 0.4), omi = c(0.2, 0, 0.5, 0), cex = 0.5) # papiergröße
+  par(mfcol=c(1,1), mai = c(0.7, 1, 0, 0.4), omi = c(0.2, 0, 0.5, 0), cex = 0.5) # papiergröße
   plotter(beg, end)
   mtext("Stria by John Chowning Performancescore",                     # Add Titel manually
         side = 3,
