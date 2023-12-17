@@ -173,5 +173,97 @@ dev.off()
 #######
 #Generate Csound MidiTester Score
 
+#stria_tester_score$instrNr <- "i1"
+#stria_tester_score$clustStart 
+#stria_tester_score$clustDur
+#stria_tester_score$MidiCh
+#stria_tester_score$MidiCC
+
+stria_tester_score <- data.frame()
+stria_tester_score$clustStart <- stria_score[stria_score$isCluster==FALSE, ] 
+
+# calc cluster dur
+
+(
+clustCount = 0
+stria_score$clustNum <- NA
+stria_score$fullClust <- stria_score$isCluster
+# mark complete Cluster (also with first event)
+for (i in stria_score$Event_num) {
+	if (stria_score$isCluster[i] == TRUE) {
+		stria_score$clustNum[i] <- clustCount
+		stria_score$clustNum[i-1] <- clustCount
+		stria_score$fullClust[i-1] <- TRUE
+		}
+	else {		
+		clustCount = clustCount + 1
+		stria_score$clustNum[i] <- clustCount
+
+		}
+ }
+)
+
+
+# calc maxEnd pro clustNum
+	stria_score$clustNumF <- as.factor(stria_score$clustNum)
+	clustEnds <- by(stria_score$End, stria_score$clustNumF,  FUN=max)
+
+# calc cluster End
+for (i in stria_score$Event_num) {
+	stria_score$clustEnd[i] <- clustEnds[stria_score$clustNum[i]]
+	}
+
+# calc cluster duration, from first event to End of Cluster
+stria_score$clustDur <- NA
+for (i in stria_score$Event_num) {
+	if (stria_score$isCluster[i] == FALSE) {
+			stria_score$clustDur[i] <- stria_score$clustEnd[i] - stria_score$Start[i]
+	}
+}
+
+
+stria_score$clustDur
+
+
+#stria_tester_score$instrNr <- "i1"
+#stria_tester_score$clustStart 
+#stria_tester_score$clustDur
+#stria_tester_score$MidiCh
+#stria_tester_score$MidiCC
+
+
+stria_score$MidiCh <- 1
+stria_score$instrNr <- "i1"
+
+str(stria_score)
+
+stria_tester_score<- stria_score[!is.na(stria_score$clustDur), c("instrNr", "Start", "clustDur", "MidiCh", "MidiFaderCC")]
+
+stria_tester_score
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
