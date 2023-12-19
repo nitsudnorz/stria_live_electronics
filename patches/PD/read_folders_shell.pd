@@ -1,0 +1,10 @@
+#N canvas 449 557 944 476 12;
+#X obj 154 103 ggee/shell;
+#X obj 149 165 print STDOUT;
+#X msg 249 54 ls;
+#X msg 102 10 /usr/local/bin/Rscript /Users/hofmann-alex/Programming/stria_live_electronics/tools/R-code/Score_Generator.R --vanilla, f 115;
+#X msg 316 65 /usr/local/Rscript --help;
+#X connect 0 0 1 0;
+#X connect 2 0 0 0;
+#X connect 3 0 0 0;
+#X connect 4 0 0 0;
