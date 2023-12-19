@@ -23,11 +23,12 @@ ktrig     changed   kCCval      ; generate a trigger each time kCCval changes
  if ktrig=1 then                  ; if kCCval has changed...
           midiout   176, ichan, iCCnum, kCCval  ; ...send a controller message
  endif
+ printk2 p6
   endin
 
 </CsInstruments>
 <CsScore>
-;p1 p2 p3 p4(CH) p5(CC)
+;p1 p2 p3 p4(CH) p5(CC) p6(event_nr)
 #include "stria_midiCC.sco"
 
 </CsScore>

@@ -233,5 +233,5 @@ for (i in stria_score$Event_num) {
 # format output
 stria_score$MidiCh <- 1
 stria_score$instrNr <- 'i1'
-stria_tester_score<- stria_score[!is.na(stria_score$clustDur), c("instrNr", "Start", "clustDur", "MidiCh", "MidiFaderCC")]
+stria_tester_score<- stria_score[!is.na(stria_score$clustDur), c("instrNr", "Start", "clustDur", "MidiCh", "MidiFaderCC", "Event_num")]
 write.table(stria_tester_score, "../Csound_MidiTester/stria_midiCC.sco", sep = " ", dec = ".", row.names = FALSE, col.names = FALSE, quote =FALSE) # save score
