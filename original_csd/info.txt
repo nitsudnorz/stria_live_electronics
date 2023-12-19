@@ -1,4 +1,0 @@
-stria.csd
-
-- downloaded from 14.12.2023: https://github.com/TheSoundOfAIOSR/csound-web/blob/main/stria.csd
-- given as "GNU Lesser General Public License v2.1": https://github.com/csound/webaudio/blob/main/LICENSE
