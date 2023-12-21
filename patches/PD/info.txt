@@ -15,6 +15,7 @@ csound_stria_render.aif; (Csound)
 	- in both versions; at some point events are missing; I suspect a polyphony problem, but can also be an assignemnt of metafaders.
 		- it can be quick-fixed by setting poly up to 260; but there seems a note-off problem
 	- event 45 is wrongly calculated.. I assume other meta events too.. but this is only for Dustin to fix; because no documentation how it is calculated.
+	- comparing the Csound Stria and PD Stria; there is some "Chorus/Shimmer" FX in Csound, and PD is very clear sine tones
 	
 
 
