@@ -1,1 +1,34 @@
 #todo add PD patch for max 8 faders here
+
+
+# debugging:
+comparing:
+csound_stria_render.aif; (Csound)
+-> taking into account that Dustins mappings were also missing Events, eg. 64
+20231221_102025_Rtext_8Ch.wav; (my reduced PD Patch, my mappings)
+20231221_104827_Rtexts_16Ch.wav; (Dustins, PD Patch but with my mappings)
+
+ 
+- overall
+	- amplitudes of PD version do not match Csound, less dynamic range overall
+
+	- in both versions; at some point events are missing; I suspect a polyphony problem, but can also be an assignemnt of metafaders.
+	
+
+
+in 8Ch version:
+	- glitches appear, but it might be that I reduced this one delay too much, but cant find where it was; it was 500 I made it 50 somewhere	-> yes this was in poly
+	- and poly was too small, we had voice stealing all the time, hwoever, releases seem wrong as it goes up to more than 60 voices, which should not happen
+
+
+
+
+
+16ch version: 
+	- we never use 16 -> make it 8
+	- the top down is opposite from score, flip it
+	- what are all these "Faderlookup" files, they seem unused
+
+Dustin 16Ch, Dustin Mapping (v3 Dezember, with first CC Checker) hangs
+	- hangs with event 165; so this proofs that these mappings are not playable with this PD patch.
+	- creates glitches at 7:00 + 8:29 (508 sec)
