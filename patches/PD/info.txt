@@ -13,16 +13,21 @@ csound_stria_render.aif; (Csound)
 	- amplitudes of PD version do not match Csound, less dynamic range overall
 
 	- in both versions; at some point events are missing; I suspect a polyphony problem, but can also be an assignemnt of metafaders.
+		- it can be quick-fixed by setting poly up to 260; but there seems a note-off problem
+	- event 45 is wrongly calculated.. I assume other meta events too.. but this is only for Dustin to fix; because no documentation how it is calculated.
 	
 
 
-in 8Ch version:
+in 8Ch version in this repo:
 	- glitches appear, but it might be that I reduced this one delay too much, but cant find where it was; it was 500 I made it 50 somewhere	-> yes this was in poly
 	- and poly was too small, we had voice stealing all the time, hwoever, releases seem wrong as it goes up to more than 60 voices, which should not happen
 
 
 
 
+
+
+OLDER VERSIONS:
 
 16ch version: 
 	- we never use 16 -> make it 8
@@ -32,3 +37,5 @@ in 8Ch version:
 Dustin 16Ch, Dustin Mapping (v3 Dezember, with first CC Checker) hangs
 	- hangs with event 165; so this proofs that these mappings are not playable with this PD patch.
 	- creates glitches at 7:00 + 8:29 (508 sec)
+	- evt. 64 missing;
+	- evt 45 creates wrong tone

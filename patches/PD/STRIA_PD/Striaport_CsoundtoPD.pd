@@ -1,4 +1,4 @@
-#N canvas 367 63 1234 944 12;
+#N canvas 775 69 733 967 12;
 #X text 333 66 DSP on/off;
 #X obj 305 71 tgl 17 0 empty empty empty 17 7 0 10 #dfdfdf #000000 #000000 0 1;
 #X msg 291 115 \; pd dsp \$1;
@@ -1137,7 +1137,6 @@
 #X connect 10 2 24 1;
 #X connect 10 3 3 0;
 #X connect 10 3 24 0;
-#X connect 25 1 24 2;
 #X connect 26 0 6 0;
 #X connect 26 1 6 1;
 #X connect 26 2 6 2;
