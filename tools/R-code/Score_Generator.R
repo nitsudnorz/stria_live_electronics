@@ -40,7 +40,7 @@ for (k in stria_score$Event_num) { # k event number, that refers to the line in 
 
 if (exportPD){
 	for (fader_CC in 0:7){
-		file.create(paste("exportPD/fader",fader_CC,".txt", sep="")) # empty old files
+		file.create(paste("../../patches/PD/STRIA_PD/faderAssigns/fader",fader_CC,".txt", sep="")) # empty old files
 		lines_in_txt <- list()
 		line_list<-c()
 		events <- stria_score[stria_score$MidiFaderCC==fader_CC, ]
@@ -53,7 +53,7 @@ if (exportPD){
 	  			}
 	  	}
 		lines_in_txt <- append(lines_in_txt, list(line_list)) # append very latest line_list
-		lapply(lines_in_txt, cat, "; \n", file=paste("exportPD/fader",fader_CC,".txt", sep=""), append=TRUE) # write line by line
+		lapply(lines_in_txt, cat, "; \n", file=paste("../../patches/PD/STRIA_PD/faderAssigns/fader",fader_CC,".txt", sep=""), append=TRUE) # write line by line
 	}
 }
 
