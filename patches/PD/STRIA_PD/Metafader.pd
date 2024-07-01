@@ -1,7 +1,7 @@
-#N canvas 131 56 1438 671 12;
+#N canvas 443 110 1438 587 12;
 #X obj 476 19 inlet;
 #X obj 559 1025 s toengine;
-#N canvas 324 45 545 346 listiter 0;
+#N canvas 324 45 545 318 listiter 0;
 #X obj 59 109 until;
 #X obj 59 184 list store;
 #X obj 57 48 t b b l;
@@ -52,7 +52,7 @@
 #X msg 535 768 get \$1 1;
 #X msg 636 767 get \$1 1;
 #X obj 450 725 t f f f;
-#N canvas 1072 488 656 437 listcollect 0;
+#N canvas 1072 488 656 409 listcollect 0;
 #X obj 163 13 inlet;
 #X obj 58 309 outlet;
 #X obj 60 13 inlet;
@@ -71,7 +71,7 @@
 #X connect 6 0 1 0;
 #X restore 447 562 pd listcollect;
 #X text 553 562 collect event numbers to reverse order;
-#N canvas 764 168 964 645 combinedEventDuration 0;
+#N canvas 764 168 964 589 combinedEventDuration 0;
 #X obj 152 79 inlet;
 #X obj 269 79 inlet;
 #N canvas 1072 488 656 409 listcollect 0;
@@ -403,7 +403,8 @@
 #X obj 592 185 text get scoredata;
 #X obj 592 155 - 1;
 #X text 630 155 compensate for array starting at 0;
-#X msg 554 54 1 2 3 4 5 6;
+#X msg 554 54 45 46 47 48 49 50;
+#X msg 730 21 1 2;
 #X connect 0 0 25 0;
 #X connect 2 0 31 1;
 #X connect 2 0 38 0;
@@ -452,3 +453,4 @@
 #X connect 37 0 3 0;
 #X connect 38 0 37 0;
 #X connect 40 0 25 0;
+#X connect 41 0 25 0;
